@@ -1,22 +1,33 @@
-import { useState, useContext, createContext, ReactNode } from "react";
-
-interface StateContextType {
-
-}
-
-const StateContext = createContext<StateContextType | undefined>(undefined);
+import { useState, useContext, createContext, ReactNode,useEffect } from "react";
 
 interface StateProviderProps {
   children: ReactNode;
 }
 
-function StateProvider({ children }: StateProviderProps) {
+interface StateContextType {
+  count: number;
+  setCount: (count: number) => void;
+}
+
+const StateContext = createContext<StateContextType | undefined>(undefined);
+
+const StateProvider: React.FC<StateProviderProps> = ({ children }) => {
+  const [count, setCount] = useState<number>(() => {
+    const storedCount = localStorage.getItem("count");
+    return storedCount ? JSON.parse(storedCount) : 0; // Default to 0 if nothing is stored
+  });
+
+  useEffect(() => {
+    localStorage.setItem("count", JSON.stringify(count));
+  }, [count]);
+
+
   return (
-    <StateContext.Provider value={{ /* initial state values */ }}>
+    <StateContext.Provider value={{ count, setCount }}>
       {children}
     </StateContext.Provider>
   );
-}
+};
 
 export function FormState(): StateContextType | undefined {
   return useContext(StateContext);

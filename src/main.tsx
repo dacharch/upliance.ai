@@ -6,13 +6,14 @@ import StateProvider from './Context/StateProvider.tsx'
 
 
 createRoot(document.getElementById('root')!).render(
-  <StrictMode>
+  
     <StateProvider>
-      <App />
+      <StrictMode>
+        <App />
+      </StrictMode>
     </StateProvider>
   
     
     
-   
-  </StrictMode>,
+  
 )
