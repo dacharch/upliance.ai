@@ -1,8 +1,9 @@
-import Counter from './components/Counter'
+
+import UserForm from './components/UserForm'
 
 const App = () => {
   return (
-    <Counter/>
+    <UserForm/>
   )
 }
 
