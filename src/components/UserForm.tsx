@@ -12,6 +12,7 @@ import {
   DialogTitle,
   Alert,
 } from '@mui/material';
+import { FormState } from '@/Context/StateProvider'; // Ensure this is correctly imported
 
 // Utility to generate user ID
 const generateUserId = (): string => {
@@ -19,12 +20,8 @@ const generateUserId = (): string => {
 };
 
 const UserForm: React.FC = () => {
-  const [formData, setFormData] = useState({
-    name: '',
-    address: '',
-    email: '',
-    phone: '',
-  });
+  // Ensure FormState is correctly used
+  const { formData, setFormData } = FormState();
 
   const [unsavedChanges, setUnsavedChanges] = useState<boolean>(false);
   const [openSnackbar, setOpenSnackbar] = useState<boolean>(false);
@@ -35,12 +32,12 @@ const UserForm: React.FC = () => {
     if (savedData) {
       setFormData(JSON.parse(savedData));
     }
-  }, []);
+  }, [setFormData]);
 
   // Handle changes to form fields
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
-    setFormData((prevData) => {
+    setFormData((prevData: any) => {
       const newData = { ...prevData, [name]: value };
       setUnsavedChanges(true);
       return newData;
