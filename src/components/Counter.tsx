@@ -1,11 +1,12 @@
 import React from "react";
-import { FormState } from "../Context/StateProvider" 
-import { useSpring, animated } from "@react-spring/web"; 
+import { FormState } from "../Context/StateProvider";
+import { useSpring, animated } from "@react-spring/web";
+import { Button, Paper, Typography, Box } from "@mui/material";
 
-const Counter: React.FC = () => {
-  const context = FormState(); 
+const Counter = () => {
+  const context = FormState();
   if (!context) {
-    return <div>Error: State context is not available.</div>;
+    return <Typography color="error">Error: State context is not available.</Typography>;
   }
 
   const { count, setCount } = context;
@@ -18,46 +19,30 @@ const Counter: React.FC = () => {
     config: { tension: 170, friction: 26 },
   });
 
-
-  const handleIncrement= () =>{
-    setCount(count+1)
-
-  } 
-  const handleDecrement = () => {
-    setCount(count>0? count-1 : 0)
-  }
-  
-  const handleReset = ()=>{
-     setCount(0);
-  }
+  const handleIncrement = () => setCount(count + 1);
+  const handleDecrement = () => setCount(count > 0 ? count - 1 : 0);
+  const handleReset = () => setCount(0);
 
   return (
-    <animated.div style={{ ...props, textAlign: "center", padding: "50px" }}>
-      <h1>Counter: {count}</h1>
-      <div>
-        <button onClick={handleIncrement} style={buttonStyle}>
-          Increment
-        </button>
-        <button onClick={handleDecrement} style={buttonStyle}>
-          Decrement
-        </button>
-        <button onClick={handleReset} style={buttonStyle}>
-          Reset
-        </button>
-      </div>
+    <animated.div style={{ ...props, textAlign: "center", padding: "30px" }}>
+      <Paper elevation={3} sx={{ padding: 4, textAlign: "center", maxWidth: 400, margin: "auto" }}>
+        <Typography variant="h4" gutterBottom>
+          Counter: {count}
+        </Typography>
+        <Box display="flex" justifyContent="center" gap={2}>
+          <Button variant="contained" color="primary" onClick={handleIncrement}>
+            Increment
+          </Button>
+          <Button variant="contained" color="secondary" onClick={handleDecrement}>
+            Decrement
+          </Button>
+          <Button variant="contained" color="error" onClick={handleReset}>
+            Reset
+          </Button>
+        </Box>
+      </Paper>
     </animated.div>
   );
-};
-
-const buttonStyle: React.CSSProperties = {
-  margin: "10px",
-  padding: "10px 20px",
-  fontSize: "16px",
-  cursor: "pointer",
-  borderRadius: "5px",
-  border: "none",
-  backgroundColor: "#4CAF50",
-  color: "white",
 };
 
 export default Counter;

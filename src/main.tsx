@@ -3,17 +3,19 @@ import { createRoot } from 'react-dom/client'
 
 import App from './App.tsx'
 import StateProvider from './Context/StateProvider.tsx'
-
+import { ChakraProvider,defaultSystem} from '@chakra-ui/react'
 
 createRoot(document.getElementById('root')!).render(
-  
-    <StateProvider>
-      <StrictMode>
+
+  <StrictMode>
+    <ChakraProvider value={defaultSystem}>
+      <StateProvider>
         <App />
-      </StrictMode>
-    </StateProvider>
-  
-    
-    
-  
+      </StateProvider>
+    </ChakraProvider>
+
+  </StrictMode>
+
+
+
 )
